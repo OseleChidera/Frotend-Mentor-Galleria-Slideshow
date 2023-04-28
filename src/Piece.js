@@ -27,11 +27,11 @@ const {id} = useParams();
 setIndexVal(Number(id))
 const itemList = useLoaderData();
 
-
+//FINDS WHICH OBJECT IS TO BE USED UPON RENDER
 let [item , setItem] = useState(itemList.find(item => item.id === Number(id)));
 
 
-
+//CHANGES THE ITEM RENDERED BASED ON THE VALUEN OF THE indexVal variable
  useEffect(() => {
  setItem(itemList.find(item => item.id === indexVal))
 }, [indexVal])
