@@ -1,25 +1,48 @@
-import logo from './logo.svg';
+
 import './App.css';
+import { useLoaderData } from 'react-router'
+import {Link } from 'react-router-dom'
+import Masonry from 'react-masonry-css'
+import './masonry.css'
+//components
+import GalleryItem from './GalleryItem'
 
 function App() {
+  const scrollToTop = () => {
+    window.scrollTo(0, 0)
+}
+const dataArray =  useLoaderData()
+const breakpoints = {
+  default : 3,
+  1000: 2 ,
+  767 : 1 ,
+}
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div className='grid' id='grid' data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 200 }' >
+              <Masonry
+               breakpointCols={breakpoints}
+              className="my-masonry-grid"
+              columnClassName="my-masonry-grid_column">
+            
+              {dataArray.map((e , index) =>( 
+                <div className={`grid-item gridItem${e.id}`} key={`${e.id}`}>
+                          <Link onClick={scrollToTop} className='link' to={`/${e.id}`} >
+                           <img
+                          alt='artwork'
+                          src={require(`${e.images.gallery}`)}
+                          className='gallery-image'/>
+                        <div className='artist-info'>
+                          <span className='piece-name capB'>{e.name}</span>
+                          <span className='artist capB'>{e.artist.name}</span>
+                        </div>
+                </Link>
+                        </div>
+                ))}
+                </Masonry>
+              </div>
   );
 }
 
 export default App;
+
+
