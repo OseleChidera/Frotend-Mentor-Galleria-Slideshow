@@ -1,16 +1,18 @@
-
+import React , {useContext}from 'react';
 import './App.css';
 import { useLoaderData } from 'react-router'
 import {Link } from 'react-router-dom'
 import Masonry from 'react-masonry-css'
 import './masonry.css'
+import { DataContext } from './DataContext'
 //components
 import GalleryItem from './GalleryItem'
 
 function App() {
-  const scrollToTop = () => {
-    window.scrollTo(0, 0)
-}
+//   const scrollToTop = () => {
+//     window.scrollTo(0, 0)
+// }
+const {scrollToTop , lenght} = useContext(DataContext)
 const dataArray =  useLoaderData()
 const breakpoints = {
   default : 3,
@@ -39,7 +41,7 @@ const breakpoints = {
                         </div>
                 ))}
                 </Masonry>
-              </div>
+      </div>
   );
 }
 

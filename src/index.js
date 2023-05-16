@@ -4,7 +4,6 @@ import reportWebVitals from './reportWebVitals';
 import { QueryClient, QueryClientProvider } from 'react-query'
 import './App.css';
 import './Tablet.css';
-import './desktop.css';
 import Routes from './Routes';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const queryClient  = new QueryClient();

@@ -1,8 +1,8 @@
-import React, { useEffect, useState ,useContext } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useLoaderData, useParams } from 'react-router'
 import {motion} from 'framer-motion'
-import {useOutletContext } from 'react-router-dom';
-import { DataContext } from './DataContext';
+import { DataContext } from './DataContext'
+import { useNavigate } from "react-router-dom";
 //components
 import Popup from './Popup'
 import Player from './Player'
@@ -12,38 +12,49 @@ import ArtistInfo from './ArtistInfo'
 
 
 export const loaderFunctionPiece = async ({params})=>{
-  const fetchUrl = `http://localhost:3000/posts`
+  const fetchUrl = `http://localhost:3000/posts/${params.id}`
   const res = await fetch(fetchUrl ,  {method: "GET", headers: {"Content-type": "application/json;charset=UTF-8"}})
-  const data  = await res.json()
-  return data;
+   const data  = await res.json()
+   return data;
 }
 
 
 export default function PieceDetails() {
-
-
-const {next , back ,indexVal , setIndexVal , popupToggle, setPopupToggle , scrollToTop} = useContext(DataContext)
+const navigate = useNavigate();
+const {popupToggle, setPopupToggle,indexVal , setIndexVal , scrollToTop , startTimer , setStartTimer} = useContext(DataContext)
 const {id} = useParams();
-setIndexVal(Number(id))
-const itemList = useLoaderData();
+// console.log({id} ,'useParams')
+const item = useLoaderData();
 
-//FINDS WHICH OBJECT IS TO BE USED UPON RENDER
-let [item , setItem] = useState(itemList.find(item => item.id === Number(id)));
+ useEffect(()=>{
+      
+      let intervalID = null;
+      if(startTimer){
+        intervalID = setInterval(() => {
+        setIndexVal((prev) => (prev + 1))
+        navigate(`/${indexVal}`)
+        console.log(indexVal)
+      }, 5000);
+      if (indexVal == 15) {
+        console.log('slideshow stopped')
+      clearInterval(intervalID)
+      setStartTimer((prev)=> false)
+      }
+    }
+      else {
+        clearInterval(intervalID)
+      setStartTimer((prev)=> false)
+      }
+      return () => clearInterval(intervalID)
 
 
-//CHANGES THE ITEM RENDERED BASED ON THE VALUEN OF THE indexVal variable
- useEffect(() => {
- setItem(itemList.find(item => item.id === indexVal))
-}, [indexVal])
-
-
-
-
+      });
 
   return (
     <>
          {popupToggle && (<Popup popupToggle={popupToggle} item={item} close={setPopupToggle}/>) }
     <div className='piece'>
+       
       <div className="piece-container">
         <motion.div initial={{x:-400}} animate={{x:0}} transition={{duration:0.5 ,type:'ease'}}className='background-image'>
          <Clicktoview setPopupToggle={setPopupToggle}/>
@@ -62,15 +73,12 @@ let [item , setItem] = useState(itemList.find(item => item.id === Number(id)));
         <span className='go-to-source 'onClick={scrollToTop} ><a href={item.source}>go to source </a></span>
         </div>
         </div>
-        </div>
         <Player 
         item={item} 
-        itemArray={itemList}
-        indexVal={indexVal} 
-        setIndexVal={setIndexVal}
-        next={next}
-        back={back}
+        indexVal={Number(id)} 
         />
+       
+    </div>
     </>
   )
 }

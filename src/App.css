@@ -42,6 +42,9 @@ input[type="range"] {
   color: black;
   background:black;
   height: 1px;
+  position: relative;
+  top: -2px;
+  left: -2px;
   background-size: 70% 100%;
   background-repeat: no-repeat;
   
@@ -84,7 +87,7 @@ text-transform:uppercase;
  font-weight:300;
 }
 main {
-  border: 5px solid black !important;
+  /* border: 5px solid black !important; */
   padding: 2rem;
   width: fit-content;
   min-height: 100vh;
@@ -173,10 +176,10 @@ width: 100%;
 .piece-artist-info .text{
   background-color: #ffff;
   color: black;
-  width: 15.5rem; 
+  width: auto; 
   height:auto; 
-  padding:18px 25px 18px 15px; 
-  /* border: 1px solid black; */
+  padding:18px 10px 18px 15px; 
+  border: 1px solid black;
   text-transform: uppercase;
 }
 .piece-artist-info .piece-name{
@@ -278,7 +281,9 @@ width: 100%;
   font-size: 0.7rem;
   color: #7d7d7d;
 }
-
+.playerIcons{
+  display: inline-flex
+}
 .player-icons{
   display: flex;
   align-items: center;

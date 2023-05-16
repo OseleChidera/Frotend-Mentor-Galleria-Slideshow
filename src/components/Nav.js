@@ -5,22 +5,13 @@ import { DataContext } from '../DataContext';
 
 export default function Nav() {
   const [slideshowText , setSlideshowText] = useState('start slideshow');
-  const [startTimer , setStartTimer] = useState(false)
-const {indexVal , setIndexVal} = useContext(DataContext)
+const {setStartTimer ,startTimer} = useContext(DataContext)
 
-      function startSlideshow(){  
-      setStartTimer(!startTimer)
-      setSlideshowText(slideshowText === 'start slideshow' ? 'stop slideshow':'start slideshow')
-      }
-      useEffect(()=>{
-      let intervalID = null;
-      if(startTimer){
-        intervalID = setInterval(() => {setIndexVal(prev => prev += 1)}, 3000)
-        console.log(indexVal)
-      }
-      else clearInterval(intervalID)
-      
-      },[startTimer])
+function startSlideshow(){  
+setStartTimer((prev)=> !startTimer)
+setSlideshowText(slideshowText === 'start slideshow' ? 'stop slideshow' :  'start slideshow')
+}
+
 
 
   return (

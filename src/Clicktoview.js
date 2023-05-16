@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import ClickToView from './assets/shared/icon-view-image.svg'
+import { DataContext } from './DataContext'
 
 
-export default function Clicktoview({setPopupToggle}) {
+export default function Clicktoview() {
+  const {popupToggle, setPopupToggle} = useContext(DataContext)
   return (
     <div className="view-image" onClick={()=>setPopupToggle(true)}>
         <img
